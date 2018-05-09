@@ -19,6 +19,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main);
 
 
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         mPreviousTime = new Date();
         mCurTime = new Date();
-        mnGapSeconds = 60;      //采集数据间隔秒数
+        mnGapSeconds = 30;      //采集数据间隔秒数
 
 
 
