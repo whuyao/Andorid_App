@@ -41,16 +41,19 @@ public class ConnectDataBase {
                                      String datetime, String gps_provider,
                                      double lat, double lon, double altitude, double accu, double speed, double bearing, double dBs,
                                      int weather_code, int motion_level, int confort_level, int population_level,
-                                     int car_stream_level, String remarks, Boolean isTrack){
+                                     int car_stream_level, double dTemp, double dHuminity, double dlight, String remarks, Boolean isTrack){
 
         sSQL = "Insert into UserUploadData_tbl (usr_mac, usr_bssid, ip_addr, dt, gps_provider, " +
                 "lat, lon, altitude, accuracy, speed, bearing, " +
-                "weather_code, motion_level, confort_level, dBfs, population_level, car_stream_level, remark, isTrack)" +
+                "weather_code, motion_level, confort_level, dBfs, population_level, car_stream_level, temperature, huminity, light, remark, isTrack)" +
                 " values (" +
                 "'" + usr_mac + "'" + ", " + "'" + usr_bssid + "'"+ ", " +"'" + ip_addr + "'"+ ", " +"'" + datetime + "'"+ ", " + "'" + gps_provider + "'"+ ", " +
-                lat+ ", " + lon+ ", " + altitude+ ", " + accu+ ", " + speed+ ", " + bearing+ ", " +
-                weather_code+ ", " + motion_level+ ", " + confort_level+ ", " + dBs+ ", " + population_level+ ", " + car_stream_level+ ", " + "'"+ remarks+ "'"+ ", " + isTrack.toString()
+                String.format("%.10f", lat)+ ", " + String.format("%.10f", lon) + ", " + String.format("%.10f", altitude)+ ", " + String.format("%.10f", accu)+ ", " + String.format("%.10f", speed)+ ", " + String.format("%.10f", bearing)+ ", " +
+                weather_code+ ", " + motion_level + ", " + confort_level + ", " + String.format("%.10f", dBs) + ", " + population_level +
+                ", " + car_stream_level + ", " + String.format("%.10f", dTemp)+ ", " + String.format("%.10f", dHuminity) + ", " + String.format("%.10f", dlight) + ", " + "'"+ remarks+ "'"+ ", " + isTrack.toString()
                 + ");";
+
+        Log.v("SQL: ", sSQL);
 
         final Thread thread = new Thread(new Runnable() {
             @Override
@@ -66,7 +69,7 @@ public class ConnectDataBase {
                     try {
                         String sInSQL = sSQL;
                         //Class.forName("com.mysql.jdbc.Driver");
-                        Connection connection = DriverManager.getConnection("jdbc:mysql://119.29.196.240:3306/UrbanSensor_DB", "guest", "guest");
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://119.29.196.240:3306/UrbanSensor_DB?characterEncoding=GBK&useUnicode=true", "guest", "guest");
                         Statement smst = connection.createStatement();
                         smst.execute(sInSQL);
                         smst.close();
